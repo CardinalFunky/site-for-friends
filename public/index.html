@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Main</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><h2>The Quad Star Palace</h2></a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="https://discord.gg/SwxtT7"><img src="https://lh3.googleusercontent.com/_4zBNFjA8S9yjNB_ONwqBvxTvyXYdC7Nh1jYZ2x6YEcldBr2fyijdjM2J5EoVdTpnkA" 
+                    class="img-fluid" style="width: 50px; height: 50px;">
+                </a>
+            </li>
+        </ul>
+        <div id="login_area">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="googleSignIn()">Google SignIn</button>
+        </div>
+    </nav>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- For Hosting URLs -->
+    <script src="/__/firebase/7.13.2/firebase-app.js"></script> <!-- Firebase core -->
+    <script src="/__/firebase/7.13.2/firebase-analytics.js"></script> <!-- Analytics -->
+    <script src="/__/firebase/7.13.2/firebase-auth.js"></script> <!-- Authentication -->
+    <script src="/__/firebase/7.13.2/firebase-firestore.js"></script> <!-- Cloud Firestore -->
+    <script src="/__/firebase/7.13.2/firebase-functions.js"></script> <!-- Cloud Functions for Firebase Client SDK -->
+    <script src="/__/firebase/7.13.2/firebase-messaging.js"></script> <!-- Cloud Messaging -->
+    <script src="/__/firebase/7.13.2/firebase-storage.js"></script> <!-- Cloud Storage -->
+    <script src="/__/firebase/7.13.2/firebase-performance.js"></script> <!-- Performance Monitoring -->
+    <script src="/__/firebase/7.13.2/firebase-database.js"></script> <!-- Realtime Database -->
+    <script src="/__/firebase/7.13.2/firebase-remote-config.js"></script> <!-- Remote Config -->
+    <script src="/__/firebase/7.13.2/firebase.js"></script> <!-- Firebase JavaScript SDK (entire SDK) -->
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- For CDN -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script> <!-- Firebase core -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-analytics.js"></script> <!-- Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-auth.js"></script> <!-- Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-firestore.js"></script> <!-- Cloud Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-functions.js"></script> <!-- Cloud Functions for Firebase Client SDK -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-messaging.js"></script> <!-- Cloud Messaging -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-storage.js"></script> <!-- Cloud Storage -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-performance.js"></script> <!-- Performance Monitoring -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script> <!-- Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-remote-config.js"></script> <!-- Remote Config -->
+    <!-- firebaseUI -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      // For CDN
+      var firebaseConfig = {
+        apiKey: "AIzaSyCL8fyzNl2gcTOQK5kwbnIZfBUa_Xpmhh0",
+        authDomain: "the-church-of-cupcake.firebaseapp.com",
+        databaseURL: "https://the-church-of-cupcake.firebaseio.com",
+        projectId: "the-church-of-cupcake",
+        storageBucket: "the-church-of-cupcake.appspot.com",
+        messagingSenderId: "193490029851",
+        appId: "1:193490029851:web:8eaf603f45c212da4fd7be",
+        measurementId: "G-FCY6C02WX7"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var db = firebase.firestore();
+
+      // If user is signed in, replace the Google Sign-In button with the user's name.
+      // Else, show the Google Sign-In button.
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            $("#login_area").replaceWith("<h2 style='color: white;'>" + user.displayName + "</h2>")
+
+            user.getToken().then(function(idToken) {
+                userIdToken = idToken;
+                fetchNotes();
+            });
+        }
+      });
+    </script>
+
+    <!-- Google Authentication -->
+    <script src="google_auth.js"></script>
+    </body>
+</html>
