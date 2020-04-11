@@ -101,12 +101,7 @@
                   <h3>Logout</h3>
                 </a>
               `
-              );
-
-            user.getToken().then(function(idToken) {
-                userIdToken = idToken;
-                fetchNotes();
-            });
+            );
         } else {
           $("#login_area").html(
             `
