@@ -7,12 +7,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
 
     <title>Main</title>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><h2>The Quad Star Palace</h2></a>
+        <a class="navbar-brand" href="index.html">
+          <h2>The Quad Star Palace</h2>
+        </a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="https://discord.gg/SwxtT7"><img src="https://lh3.googleusercontent.com/_4zBNFjA8S9yjNB_ONwqBvxTvyXYdC7Nh1jYZ2x6YEcldBr2fyijdjM2J5EoVdTpnkA" 
@@ -20,10 +23,10 @@
                 </a>
             </li>
         </ul>
-        <div id="login_area">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="googleSignIn()">Google SignIn</button>
-        </div>
+        <div id="login_area"></div>
     </nav>
+    <div class="primary-body container">
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -79,21 +82,46 @@
 
       var db = firebase.firestore();
 
+      var userAccount = null;
+
       // If user is signed in, replace the Google Sign-In button with the user's name.
       // Else, show the Google Sign-In button.
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            $("#login_area").replaceWith("<h2 style='color: white;'>" + user.displayName + "</h2>")
+          userAccount = user;
+
+            $("#login_area").replaceWith(
+              `<h2 style='color: white;'>
+                  <a href='#' onclick='profilePage()'>
+                    <img src="` + user.photoURL +`" 
+                    class="img-fluid" style="width: 50px; height: 50px;">
+                  </a>
+                </h2>
+                <a href="#" onclick="GoogleSignOut()">
+                  <h3>Logout</h3>
+                </a>
+              `
+              );
 
             user.getToken().then(function(idToken) {
                 userIdToken = idToken;
                 fetchNotes();
             });
+        } else {
+          $("#login_area").html(
+            `
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="GoogleSignIn()">
+              Google SignIn
+            </button>
+            `
+          )
         }
       });
     </script>
 
-    <!-- Google Authentication -->
+    <!-- Personal Scripts -->
     <script src="google_auth.js"></script>
+    <script src="functions.js"></script>
+    <script src="pages.js"></script>
     </body>
 </html>
