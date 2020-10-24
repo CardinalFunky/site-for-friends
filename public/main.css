@@ -1,4 +1,14 @@
+/** Navigation Bar */
+.main-navbar li {
+    display: inline;
+}
+
 /** Profile Page **/
 .primary-body .profile-page h2 {
     text-align: left;
+}
+
+/** Collections: Video Games Page */
+.collections-video-games-page h2 {
+    text-align: center;
 }
